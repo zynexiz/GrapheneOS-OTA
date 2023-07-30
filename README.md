@@ -15,4 +15,4 @@ Make sure to make the script executable with **chmod u+x ota_update**.
 
 ## Usage
 Before executing the script, turn on ADB debugging first in Developer Options. Connect your phone to the computer with an USB-cable.
-Run the script and select the OTA firmware you want to flash. The script will sign the image with your keys, patch it with Magisk, and then reboot the phone and fash the OTA. Wait until the process is done. The phone will then reboot.
+Run the script and select the OTA firmware you want to flash. The script will sign the image with your keys, patch it with Magisk, and then reboot the phone and flash the OTA. Wait until the process is done. The phone will then reboot.
