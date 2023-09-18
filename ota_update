@@ -5,9 +5,9 @@ echo "Make sure 'Allow USB Debugging' is checked before perfoming OTA update!"
 echo
 
 ## Default directories for OTA, keys and magisk apk (Magisk versions =>25211 need preinit partition name)
-OTA="ota"
-KEYS="keys"
-MAGISK="magisk.apk"
+OTA="full path to OTA folder"
+KEYS="full path to custom keys folder"
+MAGISK="/path/to/magisk.apk"
 PREINITDEVICE="metadata"
 
 unset options i
@@ -19,19 +19,19 @@ COLUMNS=1
 echo "Select image to patch and flash"
 select opt in "${options[@]}" "Exit"; do
   case $opt in
-   *.zip)
-      echo
-      python avbroot.py patch --input $OTA/$opt --privkey-avb $KEYS/avb.key --privkey-ota $KEYS/ota.key --cert-ota $KEYS/ota.crt --magisk $MAGISK --magisk-preinit-device $
-      echo
-      printf "Rebooting into sideoload mode.. "
-      adb -d wait-for-device reboot sideload
-      echo "ok."
-      printf "Updating firmware, please wait.. "
-      adb -d wait-for-sideload sideload $OTA/$opt.patched
-      echo "OTA flashed, rebooting."
-      adb reboot
+    *.zip)
+        echo
+        avbroot patch --ignore-magisk-warnings --input $OTA/$opt --privkey-avb $KEYS/avb.key --privkey-ota $KEYS/ota.key --cert-ota $KEYS/ota.crt --magisk $MAGISK --magisk-preinit-device $
+        echo
+        printf "Rebooting into sideoload mode.. "
+        adb -d wait-for-device reboot sideload
+        echo "ok."
+        printf "Updating firmware, please wait.. "
+        adb -d wait-for-sideload sideload $OTA/$opt.patched
+        echo "OTA flashed, rebooting."
+        adb reboot
         rm $OTA/$opt.patched
-        break
+      break
       ;;
     "Exit")
       break
